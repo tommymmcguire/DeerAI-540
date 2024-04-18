@@ -1,5 +1,6 @@
 install:
-	pip install -r requirements.txt
+	pip install --upgrade pip &&\
+		pip install -r requirements.txt
 
 lint:
 	pylint your_python_module.py
