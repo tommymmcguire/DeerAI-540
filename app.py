@@ -67,7 +67,7 @@ def draw_labels_on_image(image, bboxes, ages):
 
 # Main app interface
 st.title('Deer Age Prediction App')
-uploaded_file = st.file_uploader("Upload an image of a deer", type=["jpg", "png"])
+uploaded_file = st.file_uploader("Upload an image of a deer", type=["jpg", "JPG", "png", "jpeg", "JPEG"])
 
 if uploaded_file is not None:
     image = Image.open(uploaded_file).convert("RGB")

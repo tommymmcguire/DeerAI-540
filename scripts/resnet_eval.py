@@ -109,12 +109,12 @@ def evaluate_classification(model, test_loader):
 # This function evaluates the ResNet model
 def evaluate_resnet():
     # Load the trained model
-    model_path = './model.pth'
+    model_path = '../model.pth'
     model = load_model(model_path)
 
     # Define the test dataset and DataLoader
     transform = get_transform()
-    test_dataset = AgeDataset('./datasets/test', transform=transform)
+    test_dataset = AgeDataset('../datasets/test', transform=transform)
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=4)
 
     # Evaluate the model for regression

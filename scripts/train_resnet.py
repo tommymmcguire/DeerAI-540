@@ -103,7 +103,7 @@ def save_model(model, path):
 # This function will train the ResNet model and save the best weights
 def train_resnet():
     transform = get_transform()
-    datasets = {x: AgeDataset(f'./datasets/{x}', transform) for x in ['train', 'val']}
+    datasets = {x: AgeDataset(f'../datasets/{x}', transform) for x in ['train', 'val']}
     dataloaders = {x: DataLoader(datasets[x], batch_size=32, shuffle=x=='train', num_workers=4) for x in ['train', 'val']}
 
     model = create_model()
