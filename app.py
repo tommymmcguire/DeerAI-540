@@ -49,7 +49,7 @@ if uploaded_file is not None:
     base_width = 500
     w_percent = (base_width / float(image.size[0]))
     h_size = int((float(image.size[1]) * float(w_percent)))
-    display_image = image.resize((base_width, h_size), Image.ANTIALIAS)
+    display_image = image.resize((base_width, h_size), Image.Resampling.LANCZOS) 
 
     st.image(display_image, use_column_width=False, caption='Uploaded Image')
 
