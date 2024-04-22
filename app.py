@@ -35,7 +35,7 @@ def predict_age(image):
 # Main app interface
 st.title('Deer Age Prediction App')
 st.write("""
-         Please upload an image of the deer you want to age. \n 
+         Please upload an image of the deer you would like to age. \n 
          To enhance the accuracy of the prediction, make sure that the deer is prominently displayed and isolated from its surroundings. \n
          Clear and unobstructed views of the deer yield the most reliable results.
          """)
@@ -44,7 +44,14 @@ uploaded_file = st.file_uploader("Upload Image", type=["jpg", "png", "jpeg"])
 
 if uploaded_file is not None:
     image = Image.open(uploaded_file).convert("RGB")
-    st.image(image, use_column_width=True, caption='Uploaded Image')
+
+    # Resize the image for display
+    base_width = 500
+    w_percent = (base_width / float(image.size[0]))
+    h_size = int((float(image.size[1]) * float(w_percent)))
+    display_image = image.resize((base_width, h_size), Image.ANTIALIAS)
+
+    st.image(display_image, use_column_width=False, caption='Uploaded Image')
 
     if st.button('Predict Age'):
         predicted_age = predict_age(image)
