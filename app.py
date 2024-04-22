@@ -35,9 +35,9 @@ def predict_age(image):
 # Main app interface
 st.title('Deer Age Prediction App')
 st.write("""
-         Upload an image of the deer whose age you want to predict. 
-         For best results, ensure the deer is well-isolated in the image. 
-         The more clearly the deer is visible and unobstructed, the more accurate the prediction will be.
+         Please upload an image of the deer you want to age. \n 
+         To enhance the accuracy of the prediction, make sure that the deer is prominently displayed and isolated from its surroundings. \n
+         Clear and unobstructed views of the deer yield the most reliable results.
          """)
 
 uploaded_file = st.file_uploader("Upload Image", type=["jpg", "png", "jpeg"])
