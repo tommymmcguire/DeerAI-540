@@ -5,10 +5,11 @@ import numpy as np
 from sklearn.metrics import mean_absolute_error, mean_squared_error, accuracy_score, classification_report
 from math import sqrt
 from tqdm import tqdm
+from torch.utils.data import DataLoader
+from data_module import AgeDataset, get_transform
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-# Load the trained model
 def load_model(model_path):
     model = models.resnet50(pretrained=True)
     num_ftrs = model.fc.in_features
@@ -18,37 +19,10 @@ def load_model(model_path):
     model.eval()
     return model
 
-# Define the AgeDataset class
-class AgeDataset(Dataset):
-    def __init__(self, directory, transform=None):
-        self.directory = directory
-        self.transform = transform
-        self.filenames = [f for f in os.listdir(directory) if f.lower().endswith(('.jpg', '.jpeg'))]
+def is_accurate_prediction(predicted, actual):
+    """Returns True if the prediction is within ±1 year of the actual age, otherwise False."""
+    return abs(predicted - actual) <= 1
 
-    def __len__(self):
-        return len(self.filenames)
-
-    def __getitem__(self, idx):
-        img_name = os.path.join(self.directory, self.filenames[idx])
-        image = Image.open(img_name).convert('RGB')
-        basename = os.path.basename(img_name)
-        matches = re.findall(r'\d+', basename)
-        if not matches:
-            raise ValueError(f"No age found in filename: {img_name}")
-        age = float(matches[-1])
-        if self.transform:
-            image = self.transform(image)
-        return image, age
-
-# Define the transformation to be applied to the images
-def get_transform():
-    return transforms.Compose([
-        transforms.Resize((224, 224)),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-    ])
-
-# Evaluate the model for regression, which is what the model was trained for
 def evaluate_regression(model, test_loader):
     criterion = nn.MSELoss()
     actuals, predictions = [], []
@@ -74,6 +48,22 @@ def evaluate_regression(model, test_loader):
     print(f'Test Loss: {test_loss:.4f}')
     print(f'Mean Absolute Error (MAE): {mae:.4f}')
     print(f'Root Mean Squared Error (RMSE): {rmse:.4f}')
+
+def evaluate_accuracy(model, test_loader):
+    predictions = []
+    with torch.no_grad():
+        for images, ages in tqdm(test_loader, desc="Accuracy Testing"):
+            images = images.to(device)
+            ages = ages.cpu().numpy()  # Actual ages
+
+            outputs = model(images).view(-1).cpu().numpy()  # Predicted ages
+
+            # Compare each predicted age to the actual age and classify as correct or incorrect
+            predictions.extend([is_accurate_prediction(pred, act) for pred, act in zip(outputs, ages)])
+
+    # Calculate Accuracy
+    accuracy = accuracy_score([True] * len(predictions), predictions)  # Using True as all attempts are to be accurate
+    print(f'Accuracy for predictions within ±1 year: {accuracy:.4f}')
 
 # Map age to categories for classification
 def map_age_to_category(age):
@@ -124,3 +114,6 @@ def evaluate_resnet():
     # Evaluate the model for classification
     print("\nEvaluating Classification Metrics:")
     evaluate_classification(model, test_loader)
+    
+    print("\nEvaluating Accuracy for close predictions:")
+    evaluate_accuracy(model, test_loader)
