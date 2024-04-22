@@ -51,8 +51,12 @@ if uploaded_file is not None:
     h_size = int((float(image.size[1]) * float(w_percent)))
     display_image = image.resize((base_width, h_size), Image.Resampling.LANCZOS) 
 
-    st.image(display_image, use_column_width=False, caption='Uploaded Image')
-
-    if st.button('Predict Age'):
-        predicted_age = predict_age(image)
-        st.success(f"Predicted age for the deer: {predicted_age:.2f} years")
+    # Create columns to center the image
+    col1, col2, col3 = st.columns([1,2,1])  # Adjust the ratio as needed for better centering
+    with col2:  # Use the middle column to display the image
+        st.image(display_image, use_column_width=True, caption='Uploaded Image')
+        
+        # Center the button in the same middle column
+        if st.button('Predict Age'):
+            predicted_age = predict_age(image)
+            st.success(f"Predicted age for the deer: {predicted_age:.2f} years")
