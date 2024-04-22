@@ -207,7 +207,7 @@ if uploaded_file is not None:
         height=canvas_height,
         drawing_mode="rect",
         key="canvas",
-    )
+        )
 
     if st.button('Predict Age for All Bounding Boxes'):
         bboxes = []
