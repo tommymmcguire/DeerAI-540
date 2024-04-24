@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 from torchvision import models
 from torch.optim import Adam
 from tqdm import tqdm
-from data_module import AgeDataset, get_transform  # Import from data_module.py
+from data_module import AgeDataset, get_transform 
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
