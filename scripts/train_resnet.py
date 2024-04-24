@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 from torchvision import models
 from torch.optim import Adam
 from tqdm import tqdm
-from data_module import AgeDataset, get_transform 
+from .data_module import AgeDataset, get_transform 
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -74,7 +74,7 @@ def save_model(model, path):
 def train_resnet():
     """Main training function."""
     transform = get_transform()
-    datasets = {x: AgeDataset(f'../datasets/{x}', transform) for x in ['train', 'val']}
+    datasets = {x: AgeDataset(f'./datasets/{x}', transform) for x in ['train', 'val']}
     dataloaders = {x: DataLoader(datasets[x], batch_size=32, shuffle=x == 'train', num_workers=4) for x in ['train', 'val']}
     
     model = create_model()
@@ -82,5 +82,5 @@ def train_resnet():
     optimizer = Adam(model.parameters(), lr=0.001)
     model = train_model(model, dataloaders, criterion, optimizer)
     
-    model_save_path = '../model.pth'
+    model_save_path = './model.pth'
     save_model(model, model_save_path)

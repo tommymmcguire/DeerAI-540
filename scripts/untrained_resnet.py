@@ -7,9 +7,9 @@ import numpy as np
 from sklearn.metrics import mean_absolute_error, mean_squared_error, accuracy_score
 from math import sqrt
 import matplotlib.pyplot as plt
-from data_module import AgeDataset, get_transform
+from .data_module import AgeDataset, get_transform
 
-device = torch.device("cuda:0" if torch.cuda.is_available else "cpu")
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def create_untrained_model():
     """Create an untrained ResNet model with a modified output layer."""
@@ -53,7 +53,7 @@ def evaluate_model(model, data_loader):
 def evaluate_untrained_resnet():
     """Setup the dataset and model, then run evaluations."""
     transform = get_transform()
-    test_dataset = AgeDataset('../datasets/test', transform=transform)  # Adjust path as necessary
+    test_dataset = AgeDataset('./datasets/test', transform=transform)  # Adjust path as necessary
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=4)
 
     model = create_untrained_model()

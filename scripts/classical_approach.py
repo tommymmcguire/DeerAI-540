@@ -10,10 +10,10 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, accuracy_sc
 import re
 
 class ClassicalApproach:
-    def __init__(self, train_dir, val_dir, test_dir):
-        self.train_dir = '../datasets/train'
-        self.val_dir = '../datasets/val'
-        self.test_dir = '../datasets/test'
+    def __init__(self):
+        self.train_dir = './datasets/train'
+        self.val_dir = './datasets/val'
+        self.test_dir = './datasets/test'
         self.model = make_pipeline(StandardScaler(), SVR(C=1.0, epsilon=0.2))
 
     def resize_image(self, image, target_height=500):

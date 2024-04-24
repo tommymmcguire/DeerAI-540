@@ -3,7 +3,7 @@ import numpy as np
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 from sklearn.metrics import mean_squared_error, mean_absolute_error, accuracy_score, classification_report
-from data_module import AgeDataset, get_transform
+from .data_module import AgeDataset, get_transform
 
 # Function to calculate the mean age from a DataLoader
 def calculate_mean_age(loader):
@@ -55,7 +55,7 @@ def predict_and_evaluate_mean_age(loader, mean_age):
 # Main function to run evaluations
 def run_mean_model():
     transform = get_transform()
-    test_dataset = AgeDataset('../datasets/test', transform=transform)
+    test_dataset = AgeDataset('./datasets/test', transform=transform)
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 
     mean_age = calculate_mean_age(test_loader)

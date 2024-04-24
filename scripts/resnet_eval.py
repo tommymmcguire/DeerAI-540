@@ -6,7 +6,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, accuracy_sc
 from math import sqrt
 from tqdm import tqdm
 from torch.utils.data import DataLoader
-from data_module import AgeDataset, get_transform
+from .data_module import AgeDataset, get_transform
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -99,12 +99,12 @@ def evaluate_classification(model, test_loader):
 # This function evaluates the ResNet model
 def evaluate_resnet():
     # Load the trained model
-    model_path = '../model.pth'
+    model_path = './model.pth'
     model = load_model(model_path)
 
     # Define the test dataset and DataLoader
     transform = get_transform()
-    test_dataset = AgeDataset('../datasets/test', transform=transform)
+    test_dataset = AgeDataset('./datasets/test', transform=transform)
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=4)
 
     # Evaluate the model for regression
