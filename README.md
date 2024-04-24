@@ -10,8 +10,6 @@ Despite the limitations of this dataset, this model demonstrated impressive resu
 
 <img width="405" alt="Screenshot 2024-04-24 at 12 49 25 PM" src="https://github.com/tommymmcguire/DeerAI-540/assets/141086024/1736afae-0fe9-4a90-9dea-149a16e771e9">
 
-<img width="403" alt="Screenshot 2024-04-24 at 12 49 42 PM" src="https://github.com/tommymmcguire/DeerAI-540/assets/141086024/57d26ba7-1e63-4213-a7ea-48b9e3e7ec01">
-
 
 ## File Structure
 ```
