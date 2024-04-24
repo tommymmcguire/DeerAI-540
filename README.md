@@ -6,6 +6,11 @@ This application utilizes machine learning and computer vision to predict the ag
 ## Results
 Despite the limitations of this dataset, this model demonstrated impressive results with an MAE of 1.4709 and an RMSE of 2.3007. The model's predictions fall within +/- 2 years of the actual age 76.6% of the time. Grad-CAM analysis shows that these are some of the features that the model has learned from:
 
+<img width="405" alt="Screenshot 2024-04-24 at 12 49 13 PM" src="https://github.com/tommymmcguire/DeerAI-540/assets/141086024/1eee64c8-3e88-48a2-95e4-16b535589201">
+
+<img width="405" alt="Screenshot 2024-04-24 at 12 49 25 PM" src="https://github.com/tommymmcguire/DeerAI-540/assets/141086024/1736afae-0fe9-4a90-9dea-149a16e771e9">
+
+<img width="403" alt="Screenshot 2024-04-24 at 12 49 42 PM" src="https://github.com/tommymmcguire/DeerAI-540/assets/141086024/57d26ba7-1e63-4213-a7ea-48b9e3e7ec01">
 
 
 ## File Structure
